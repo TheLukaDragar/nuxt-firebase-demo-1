@@ -8,6 +8,18 @@ exports.testFunction = functions.https.onCall(() => {
   return { message: "Yeaaahh it's working!" }
 })
 
+exports.OnNewUserToDB = functions.region('europe-west1').auth.user().onCreate((user) => {
+  var db = admin.firestore();
+  return db.collection("users").doc(user.uid).set({
+    email: user.email,
+    displayName: user.displayName,
+    uid: user.uid,
+    photoURL:user.photoURL,
+
+  })
+});
+
+
 exports.sendTestPushMessage = functions.region('europe-west1').https.onCall(async (data) => {
   // As defined in https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages
   const image =
