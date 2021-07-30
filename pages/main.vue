@@ -3,8 +3,10 @@
   <v-container>
 
     <h3 class="text-3xl mb-5">
-        Test
+        Your Teams
     </h3>
+
+    <team-view/>
     
     
 
@@ -14,15 +16,17 @@
 </template>
 
 <script>
+import TeamView from '~/components/TeamView.vue'
 
 
 
-
+import Teams from "../components/Teams"
 export default {
 
   layout: "main",
 
   components: {
+    TeamView
     
   },
 

@@ -109,7 +109,7 @@ export default {
                 {
                 icon: 'mdi-medal',
                 title: 'Teams',
-                to: '/uspeh'
+                to: '/teams'
                 },
                 {
                 icon:'mdi-account-box' ,
