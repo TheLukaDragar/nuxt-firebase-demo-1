@@ -2,6 +2,7 @@ const functions = require('firebase-functions')
 const admin = require('firebase-admin')
 admin.initializeApp()
 const messaging = admin.messaging()
+const db = admin.firestore();
 
 exports.testFunction = functions.https.onCall(() => {
   console.info('Test Function triggered')
@@ -9,7 +10,7 @@ exports.testFunction = functions.https.onCall(() => {
 })
 
 exports.OnNewUserToDB = functions.region('europe-west1').auth.user().onCreate((user) => {
-  var db = admin.firestore();
+  db = admin.firestore();
   return db.collection("users").doc(user.uid).set({
     email: user.email,
     displayName: user.displayName,
@@ -17,6 +18,48 @@ exports.OnNewUserToDB = functions.region('europe-west1').auth.user().onCreate((u
     photoURL:user.photoURL,
 
   })
+});
+
+exports.joinATeam = functions.region('europe-west1').https.onCall(async (data) =>  {
+ 
+
+  try {
+    const teamid = data.team_id;
+    const password = data.password;
+    const uid = data.uid;
+
+
+    const docRef = db.collection('teams').doc(teamid);
+        const getDoc = await docRef.get()
+            .then(doc => {
+                if (doc.exists) {
+                  const passwordfromdb=doc.data().password
+
+                  if(password==passwordfromdb){
+                    var tRef = db.collection("teams").doc(teamid);
+                      // Atomically add a new region to the "regions" array field.
+                      return tRef.update({
+                    members: admin.firestore.FieldValue.arrayUnion(uid)
+                    });
+
+                  }
+
+                }
+
+            })
+
+        
+          
+    
+  }
+  
+  catch (error)  {
+      throw new functions.https.HttpsError('unknown', error)
+  }
+
+
+  return{message:"SUCCESS"}
+  
 });
 
 
