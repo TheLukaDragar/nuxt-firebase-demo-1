@@ -8,6 +8,54 @@ exports.testFunction = functions.https.onCall(() => {
   console.info('Test Function triggered')
   return { message: "Yeaaahh it's working!" }
 })
+exports.karoobarAPI = functions.region('europe-west1').https.onCall(async (data) =>  {
+ 
+
+  try {
+    const rider_name = data.name;
+    const team_id = data.team_id;
+    const password = data.password;
+    const request = data.request;
+
+    /*
+    const docRef = db.collection('teams').doc(teamid);
+        const getDoc = await docRef.get()
+            .then(doc => {
+                if (doc.exists) {
+                  const passwordfromdb=doc.data().password
+
+                  if(password==passwordfromdb){
+                    var tRef = db.collection("teams").doc(teamid);
+                      // Atomically add a new region to the "regions" array field.
+                      return tRef.update({
+                    members: admin.firestore.FieldValue.arrayUnion(uid)
+                    });
+
+                  }
+
+                }
+
+            })
+            */
+
+            console.log(rider_name)
+            console.log(team_id)
+            console.log(password)
+            console.log(request)
+
+        
+          
+    
+  }
+  
+  catch (error)  {
+      throw new functions.https.HttpsError('unknown', error)
+  }
+
+
+  return{message:"SUCCESS"}
+  
+});
 
 exports.OnNewUserToDB = functions.region('europe-west1').auth.user().onCreate((user) => {
   db = admin.firestore();
