@@ -1,27 +1,20 @@
 <template>
-
-
- <v-row justify="center">
-      <teams/>
-    <v-dialog
-      v-model="dialog"
-      persistent
-      max-width="600px"
-    >
+  <v-row justify="center">
+    <teams />
+    <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-           <v-btn
-                
-                color="primary"
-                dark
-                absolute
-                bottom
-                right
-                fab
-                 v-bind="attrs"
+        <v-btn
+          color="primary"
+          dark
+          absolute
+          bottom
+          right
+          fab
+          v-bind="attrs"
           v-on="on"
-              >
-                <v-icon>mdi-plus</v-icon>
-    </v-btn>
+        >
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
       </template>
       <v-card>
         <v-card-title>
@@ -29,183 +22,166 @@
         </v-card-title>
         <v-card-text>
           <v-container>
+            <v-row class="flex-column">
+              <label for="title"
+                ><span class="font-weight-bold text-h6">Team name</span></label
+              >
+              <input
+                id="title"
+                v-model="team.name"
+                type="text"
+                placeholder="Title"
+                @input="updateId"
+                class="p-2 text-subtitle-1"
+              />
+            </v-row>
+            <v-row class="flex-column">
+              <label for="id"
+                ><span class="font-weight-bold text-h6">Team ID</span></label
+              >
+              <input
+                id="id"
+                ref="id"
+                v-model="team.id"
+                type="text"
+                placeholder="ID"
+                class="p-2 text-subtitle-1"
+              />
+            </v-row>
             <v-row>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
+              <v-text-field
+                label="Team Description"
+                hint="example of helper text only on focus"
+              ></v-text-field>
+            </v-row>
+
+            <v-row class="flex-column">
+              <label for="password"
+                ><span class="font-weight-bold text-h6">Password</span></label
               >
-                 <label for="title">Team name</label>
-                <input id="title" v-model="team.name" type="text" placeholder="Title" @input="updateId">
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                 <label for="id">ID</label>
-                <input id="id" ref="id" v-model="team.id" type="text" placeholder="ID">
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
-                  label="Team Description"
-                  hint="example of helper text only on focus"
-                ></v-text-field>
-              </v-col>
-              
-              <v-col cols="12">
-                 <label for="password">Password</label>
-                <input id="password" ref="password" v-model="team.password" type="passsword" placeholder="password">
-              </v-col>
-              
+              <input
+                id="password"
+                ref="password"
+                v-model="team.password"
+                type="passsword"
+                placeholder="password"
+                class="p-2 text-subtitle-1"
+              />
             </v-row>
           </v-container>
           <small>*indicates required field</small>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="dialog = false"
-          >
+          <v-btn color="blue darken-1" text @click="dialog = false">
             Close
           </v-btn>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="submitForm"
-          >
-            Save
-          </v-btn>
+          <v-btn color="blue darken-1" text @click="submitForm"> Save </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
 
-    <v-dialog
-      v-model="joindialog"
-      persistent
-      max-width="600px"
-    >
+    <v-dialog v-model="joindialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-           <v-btn
-                
-                color="red"
-                dark
-                absolute
-                bottom
-                left
-                fab
-                 v-bind="attrs"
+        <v-btn
+          color="red"
+          dark
+          absolute
+          bottom
+          left
+          fab
+          v-bind="attrs"
           v-on="on"
-              >
-                <v-icon>mdi-plus</v-icon>
-    </v-btn>
+        >
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
       </template>
       <v-card>
         <v-card-title>
-          <span class="text-h5">Join A Team</span>
+          <span class="text-h4">Join A Team</span>
         </v-card-title>
         <v-card-text>
           <v-container>
-            <v-row>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
+            <v-row class="flex-column">
+              <label for="title2"
+                ><span class="font-weight-bold text-h6">Team Name</span></label
               >
-                 <label for="title2">Team Name</label>
-                <input id="title2" v-model="team.name" type="text" placeholder="Title" @input="updateId">
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
+              <input
+                id="title2"
+                v-model="team.name"
+                type="text"
+                placeholder="Title"
+                @input="updateId"
+                class="p-2 text-subtitle-1"
+              />
+            </v-row>
+            <v-row class="flex-column">
+              <label for="id2"
+                ><span class="font-weight-bold text-h6">Team ID</span></label
               >
-                 <label for="id2">ID</label>
-                <input id="id2" ref="id2" v-model="team.id" type="text" placeholder="ID">
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
+              <input
+                id="id2"
+                ref="id2"
+                v-model="team.id"
+                type="text"
+                placeholder="ID"
+                class="p-2 text-subtitle-1"
+              />
+            </v-row>
+
+            <v-row class="flex-column">
+              <label for="password2"
+                ><span class="font-weight-bold text-h6">Password</span></label
               >
-                
-              </v-col>
-              
-              <v-col cols="12">
-                 <label for="password2">Password</label>
-                <input id="password2" ref="password2" v-model="team.password" type="passsword" placeholder="password">
-              </v-col>
-              
+              <input
+                id="password2"
+                ref="password2"
+                v-model="team.password"
+                type="passsword"
+                placeholder="password"
+                class="p-2 text-subtitle-1"
+              />
             </v-row>
           </v-container>
           <small>*indicates required field</small>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="joindialog = false"
-          >
+          <v-btn color="blue darken-1" text @click="joindialog = false">
             Close
           </v-btn>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="submitJoinForm"
-          >
+          <v-btn color="blue darken-1" text @click="submitJoinForm">
             Join
           </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-
-    
   </v-row>
-    
-   
-    
-   
-
-  
 </template>
 
 <script>
-import Teams from "../components/Teams"
+import Teams from '../components/Teams'
 import { mapGetters } from 'vuex'
-import {cloneDeep} from 'lodash'
+import { cloneDeep } from 'lodash'
 import firebase from 'firebase/app'
-import 'firebase/firestore';
+import 'firebase/firestore'
 
 export default {
-
-
-  layout: "main",
+  layout: 'main',
   data: () => ({
-      dialog: false,
-      joindialog: false,
-      team: {},
-    }),
+    dialog: false,
+    joindialog: false,
+    team: {},
+  }),
 
-    computed: {
-
-    ...mapGetters(['UserInfo'])
-
+  computed: {
+    ...mapGetters(['UserInfo']),
   },
 
-  components: {
-    
-  },
+  components: {},
 
-  methods:{
-
-      async submitJoinForm() {
+  methods: {
+    async submitJoinForm() {
       if (!this.team.id) {
         // eslint-disable-next-line no-alert
         alert('Please enter the team ID.')
@@ -218,77 +194,79 @@ export default {
         this.$refs.password2.focus()
         return
       }
-      
+
       await this.joinATeam()
     },
 
-      async joinATeam() {
+    async joinATeam() {
       try {
-       const res = await this.$fire.functions.httpsCallable('joinATeam')({
-            uid: this.UserInfo.uid,
-            team_id: this.team.id,
-            password: this.team.password,
-          })
+        const res = await this.$fire.functions.httpsCallable('joinATeam')({
+          uid: this.UserInfo.uid,
+          team_id: this.team.id,
+          password: this.team.password,
+        })
 
-           console.log(res)
+        console.log(res)
       } catch (httpsError) {
-           console.log(httpsError)
+        console.log(httpsError)
         alert(httpsError.message)
       }
 
-      this.joindialog =false 
+      this.joindialog = false
     },
 
-       async submitForm() {
+    async submitForm() {
       if (!this.team.id) {
         // eslint-disable-next-line no-alert
         alert('Please enter the team ID.')
         this.$refs.id.focus()
         return
       }
-      
-        const exists = await this.checkExists(this.team.id)
-        if (exists) {
-          // eslint-disable-next-line no-alert
-          alert('Team already exists. Please enter a unique team ID.')
-          this.$refs.id.focus()
-          return
-        }
 
-        if (!this.team.password) {
+      const exists = await this.checkExists(this.team.id)
+      if (exists) {
+        // eslint-disable-next-line no-alert
+        alert('Team already exists. Please enter a unique team ID.')
+        this.$refs.id.focus()
+        return
+      }
+
+      if (!this.team.password) {
         // eslint-disable-next-line no-alert
         alert('Please enter team password.')
         this.$refs.password.focus()
         return
-        }
-      
+      }
+
       await this.writeToDB()
     },
 
-
     updateId() {
-    this.team.id = this.slugify(this.team.name)
+      this.team.id = this.slugify(this.team.name)
     },
     slugify(string) {
       const a =
-          'àáäâãåăæąçćčđďèéěėëêęğǵḧìíïîįłḿǹńňñòóöôœøṕŕřßşśšșťțùúüûǘůűūųẃẍÿýźžż·/_,:;'
+        'àáäâãåăæąçćčđďèéěėëêęğǵḧìíïîįłḿǹńňñòóöôœøṕŕřßşśšșťțùúüûǘůűūųẃẍÿýźžż·/_,:;'
       const b =
-          'aaaaaaaaacccddeeeeeeegghiiiiilmnnnnooooooprrsssssttuuuuuuuuuwxyyzzz------'
+        'aaaaaaaaacccddeeeeeeegghiiiiilmnnnnooooooprrsssssttuuuuuuuuuwxyyzzz------'
       const p = new RegExp(a.split('').join('|'), 'g')
       return string
-          .toString()
-          .toLowerCase()
-          .replace(/\s+/g, '-') // Replace spaces with -
-          .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
-          .replace(/&/g, '-and-') // Replace & with 'and'
-          .replace(/[^\w-]+/g, '') // Remove all non-word characters
-          .replace(/--+/g, '-') // Replace multiple - with single -
-          .replace(/^-+/, '') // Trim - from start of text
-          .replace(/-+$/, '') // Trim - from end of text
+        .toString()
+        .toLowerCase()
+        .replace(/\s+/g, '-') // Replace spaces with -
+        .replace(p, (c) => b.charAt(a.indexOf(c))) // Replace special characters
+        .replace(/&/g, '-and-') // Replace & with 'and'
+        .replace(/[^\w-]+/g, '') // Remove all non-word characters
+        .replace(/--+/g, '-') // Replace multiple - with single -
+        .replace(/^-+/, '') // Trim - from start of text
+        .replace(/-+$/, '') // Trim - from end of text
     },
     async checkExists() {
       const db = this.$fire.firestore
-      const documentSnapshot = await db.collection('teams').doc(this.team.id).get()
+      const documentSnapshot = await db
+        .collection('teams')
+        .doc(this.team.id)
+        .get()
       return documentSnapshot.exists
     },
 
@@ -301,21 +279,17 @@ export default {
       delete team.id
 
       team.members = [this.UserInfo.uid]
-      
-      
+
       team.created = serverTimestamp
       team.owner = this.UserInfo.uid
-    
-      
-      
+
       try {
         const promises = []
         const promise1 = db.collection('teams').doc(id).set(team)
-        
-       
+
         promises.push(promise1)
         await Promise.all(promises)
-        this.dialog =false
+        this.dialog = false
       } catch (error) {
         // eslint-disable-next-line no-alert
         alert('Error saving team')
@@ -324,14 +298,8 @@ export default {
       }
       team.id = id
       this.$emit('input', cloneDeep(team))
-      
-      
     },
-
-
-  }
-  
-
+  },
 }
 </script>
 

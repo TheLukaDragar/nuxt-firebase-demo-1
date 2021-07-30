@@ -8,7 +8,7 @@ require('dotenv').config()
 
 console.log(process.env)
 
-declare var process : {
+declare var process: {
   env: {
     NODE_ENV: string
     FIRE_APIKEY: string,
@@ -48,22 +48,22 @@ const config: NuxtConfig = {
   vuetify: {
     //customVariables: ['~/assets/variables.scss'],
     theme: {
-      light:true,
+      light: true,
 
       dark: false,  //you don't actually need this line as it's for default
       themes: {
-          light: {
-            primary: '#26bcdb',
-            secondary: '#1f90a6',
-            info: '#1f90a6',
+        light: {
+          primary: '#26bcdb',
+          secondary: '#1f90a6',
+          info: '#1f90a6',
 
-          },
-          dark: {
-            primary: '#26bcdb',
-            secondary: '#1f90a6',
-            info: '#1f90a6',
+        },
+        dark: {
+          primary: '#26bcdb',
+          secondary: '#1f90a6',
+          info: '#1f90a6',
 
-          },
+        },
       }
     }
   },

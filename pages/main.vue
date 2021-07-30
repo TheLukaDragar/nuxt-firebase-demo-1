@@ -1,34 +1,20 @@
 <template>
-
   <v-container>
+    <h3 class="text-3xl mb-5">Your Teams</h3>
 
-    <h3 class="text-3xl mb-5">
-        Your Teams
-    </h3>
-
-    <team-view/>
-    
-    
-
+    <team-view />
   </v-container>
-
-
 </template>
 
 <script>
 import TeamView from '~/components/TeamView.vue'
 
-
-
-import Teams from "../components/Teams"
+import Teams from '../components/Teams'
 export default {
-
-  layout: "main",
+  layout: 'main',
 
   components: {
-    TeamView
-    
+    TeamView,
   },
-
 }
 </script>
