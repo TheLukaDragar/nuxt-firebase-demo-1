@@ -96,6 +96,9 @@ const config: NuxtConfig = {
         //emulatorPort: isDev && useEmulators ? 8080 : undefined,
       },
       functions: {
+
+        location: 'europe-west1',
+
         //emulatorPort: isDev && useEmulators ? 12345 : undefined,
       },
       storage: {

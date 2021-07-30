@@ -58,11 +58,8 @@
               </v-col>
               
               <v-col cols="12">
-                <v-text-field
-                  label="Team Password*"
-                  type="password"
-                  required
-                ></v-text-field>
+                 <label for="password">Password</label>
+                <input id="password" ref="password" v-model="team.password" type="passsword" placeholder="password">
               </v-col>
               
             </v-row>
@@ -84,6 +81,86 @@
             @click="submitForm"
           >
             Save
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog
+      v-model="joindialog"
+      persistent
+      max-width="600px"
+    >
+      <template v-slot:activator="{ on, attrs }">
+           <v-btn
+                
+                color="red"
+                dark
+                absolute
+                bottom
+                left
+                fab
+                 v-bind="attrs"
+          v-on="on"
+              >
+                <v-icon>mdi-plus</v-icon>
+    </v-btn>
+      </template>
+      <v-card>
+        <v-card-title>
+          <span class="text-h5">Join A Team</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col
+                cols="12"
+                sm="6"
+                md="4"
+              >
+                 <label for="title2">Team Name</label>
+                <input id="title2" v-model="team.name" type="text" placeholder="Title" @input="updateId">
+              </v-col>
+              <v-col
+                cols="12"
+                sm="6"
+                md="4"
+              >
+                 <label for="id2">ID</label>
+                <input id="id2" ref="id2" v-model="team.id" type="text" placeholder="ID">
+              </v-col>
+              <v-col
+                cols="12"
+                sm="6"
+                md="4"
+              >
+                
+              </v-col>
+              
+              <v-col cols="12">
+                 <label for="password2">Password</label>
+                <input id="password2" ref="password2" v-model="team.password" type="passsword" placeholder="password">
+              </v-col>
+              
+            </v-row>
+          </v-container>
+          <small>*indicates required field</small>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="blue darken-1"
+            text
+            @click="joindialog = false"
+          >
+            Close
+          </v-btn>
+          <v-btn
+            color="blue darken-1"
+            text
+            @click="submitJoinForm"
+          >
+            Join
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -112,6 +189,7 @@ export default {
   layout: "main",
   data: () => ({
       dialog: false,
+      joindialog: false,
       team: {},
     }),
 
@@ -127,6 +205,40 @@ export default {
 
   methods:{
 
+      async submitJoinForm() {
+      if (!this.team.id) {
+        // eslint-disable-next-line no-alert
+        alert('Please enter the team ID.')
+        this.$refs.id2.focus()
+        return
+      }
+      if (!this.team.password) {
+        // eslint-disable-next-line no-alert
+        alert('Please enter the team password.')
+        this.$refs.password2.focus()
+        return
+      }
+      
+      await this.joinATeam()
+    },
+
+      async joinATeam() {
+      try {
+       const res = await this.$fire.functions.httpsCallable('joinATeam')({
+            uid: this.UserInfo.uid,
+            team_id: this.team.id,
+            password: this.team.password,
+          })
+
+           console.log(res)
+      } catch (httpsError) {
+           console.log(httpsError)
+        alert(httpsError.message)
+      }
+
+      this.joindialog =false 
+    },
+
        async submitForm() {
       if (!this.team.id) {
         // eslint-disable-next-line no-alert
@@ -141,6 +253,13 @@ export default {
           alert('Team already exists. Please enter a unique team ID.')
           this.$refs.id.focus()
           return
+        }
+
+        if (!this.team.password) {
+        // eslint-disable-next-line no-alert
+        alert('Please enter team password.')
+        this.$refs.password.focus()
+        return
         }
       
       await this.writeToDB()
@@ -180,9 +299,13 @@ export default {
       const team = cloneDeep(this.team)
       const id = team.id
       delete team.id
-    
+
+      team.members = [this.UserInfo.uid]
+      
+      
       team.created = serverTimestamp
       team.owner = this.UserInfo.uid
+    
       
       
       try {

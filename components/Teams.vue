@@ -58,7 +58,7 @@ export default {
       const db = this.$fire.firestore
 
       let query = db.collection('teams')
-          .where('owner', '==', this.UserInfo.uid)
+          .where('members', 'array-contains', this.UserInfo.uid)
           .orderBy('created', "desc")
           .limit(this.batchSize)
       if (this.lastDoc) {
