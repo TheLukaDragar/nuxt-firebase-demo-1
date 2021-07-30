@@ -5,5 +5,12 @@ export default {
     } catch {
       return false
     }
-  }
+  },
+  UserInfo: (state) => {
+    try {
+      return state.authUser
+    } catch {
+      return false
+    }
+  },
 }
