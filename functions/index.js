@@ -17,32 +17,40 @@ exports.karoobarAPI = functions.region('europe-west1').https.onCall(async (data)
     const password = data.password;
     const request = data.request;
 
-    /*
-    const docRef = db.collection('teams').doc(teamid);
+    console.log(rider_name)
+            console.log(team_id)
+            console.log(password)
+            console.log(request)
+
+
+    
+    const docRef = db.collection('teams').doc(team_id);
         const getDoc = await docRef.get()
             .then(doc => {
                 if (doc.exists) {
                   const passwordfromdb=doc.data().password
 
                   if(password==passwordfromdb){
-                    var tRef = db.collection("teams").doc(teamid);
-                      // Atomically add a new region to the "regions" array field.
-                      return tRef.update({
-                    members: admin.firestore.FieldValue.arrayUnion(uid)
+                    var tRef = db.collection("teams").doc(team_id).collection("bar").doc();
+                   
+                   return tRef.set({
+                      rider_name:data.name,
+                      timestamp:admin.firestore.FieldValue.serverTimestamp(),
+                      request:data.request
+                      
                     });
+                    
+                      
+
 
                   }
 
                 }
 
             })
-            */
+            
 
-            console.log(rider_name)
-            console.log(team_id)
-            console.log(password)
-            console.log(request)
-
+            
         
           
     
