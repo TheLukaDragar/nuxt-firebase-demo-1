@@ -19,9 +19,11 @@
     "firebase": "8.6.5",
     "firebase-admin": "^9.9.0",
     "lodash": "^4.17.21",
+    "moment": "^2.29.1",
     "nuxt": "^2.15.6",
     "prismjs": "^1.22.0",
-    "vue-prism-component": "^2.0.0"
+    "vue-prism-component": "^2.0.0",
+    "vue-toastification": "^1.7.11"
   },
   "devDependencies": {
     "@nuxt/types": "^2.15.6",

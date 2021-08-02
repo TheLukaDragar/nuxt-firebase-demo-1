@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-      <v-card height="320/2" width="500/2" color=#1a1a1a dark>
+      <v-card height="320" width="500" color=#1a1a1a dark>
         <v-toolbar
             flat
             height="50"
@@ -44,7 +44,7 @@
 
           </v-card-title>
 
-          <v-card-subtitle>{{ req.timestamp }}</v-card-subtitle>
+          <v-card-subtitle>{{ req.timestamp | toDate}}</v-card-subtitle>
 
          
         

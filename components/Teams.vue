@@ -42,10 +42,10 @@ export default {
 
   async mounted() {
     await this.loadVideos()
-    window.addEventListener('scroll', this.loadMore)
+    
   },
   destroyed() {
-    window.removeEventListener('scroll', this.loadMore)
+   
   },
   methods: {
 
@@ -64,37 +64,28 @@ export default {
       if (this.lastDoc) {
         query = query.startAfter(this.lastDoc)
       }
-      const querySnapshot = await query.get()
-      this.eof = querySnapshot.empty
-      if (querySnapshot.size > 0) {
-        this.lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1]
-        for (const doc of querySnapshot.docs) {
+      const querySnapshot = await query.onSnapshot(res => {
+        const changes=res.docChanges()
 
-         
-          const docdata = doc.data()
-          this.teasers.push({
-            id: doc.id,
-            ...docdata
-          })
-        }
+        changes.forEach(change => {
+          if(change.type==='added') {
 
+                this.teasers.push({
+                  id:change.doc.id,
+                   ...change.doc.data(),
+                })
+              
+          }
 
-      }
+        })
+
+      })
+            
 
 
       this.isLoading = false
     },
-    loadMore() {
-      const elementBounds = this.$el.getBoundingClientRect()
-      // Add extra padding to load earlier even before the bottom of the element is in view.
-      const padding = 100
-      const bottomOfWindow =
-          elementBounds.bottom <=
-          (window.innerHeight || document.documentElement.clientHeight) + padding
-      if (bottomOfWindow && !this.isLoading && !this.eof) {
-        this.loadVideos()
-      }
-    }
+    
   }
 }
 </script>

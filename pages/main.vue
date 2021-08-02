@@ -8,8 +8,6 @@
 
 <script>
 import TeamView from '~/components/TeamView.vue'
-
-import Teams from '../components/Teams'
 export default {
   layout: 'main',
 

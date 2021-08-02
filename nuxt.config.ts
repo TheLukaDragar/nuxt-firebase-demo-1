@@ -131,8 +131,11 @@ const config: NuxtConfig = {
 
 
 
-  modules: ['@nuxtjs/pwa'],
+  modules: ['@nuxtjs/pwa',"vue-toastification/nuxt"],
   // plugins: ['~/plugins/lazyMode'],
+  plugins: [
+    { src: '~/plugins/to-date.js', mode: 'client' }
+  ],
 
   build: {},
 

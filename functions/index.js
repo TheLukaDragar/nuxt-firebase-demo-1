@@ -66,7 +66,6 @@ exports.karoobarAPI = functions.region('europe-west1').https.onCall(async (data)
 });
 
 exports.OnNewUserToDB = functions.region('europe-west1').auth.user().onCreate((user) => {
-  db = admin.firestore();
   return db.collection("users").doc(user.uid).set({
     email: user.email,
     displayName: user.displayName,
