@@ -2,7 +2,7 @@
   "functions": {
     "source": "functions",
     "predeploy": [
-      "rm -rf functions/.nuxt && npm --prefix run build && mkdir -p functions/.nuxt/dist && cp -r .nuxt/dist/ functions/.nuxt/ && cp nuxt.config.ts functions/"
+      "rm -rf functions/.nuxt && npm run build && mkdir -p functions/.nuxt/dist && cp -r .nuxt/dist/ functions/.nuxt/ && cp nuxt.config.ts functions/"
     ]
   },
   "hosting": {
