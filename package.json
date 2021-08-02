@@ -6,12 +6,13 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt-ts generate",
+    "generate": "nuxt generate",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint": "npm run lint:js",
     "emulators": "firebase emulators:start"
   },
   "dependencies": {
+    "@nuxt/typescript": "^2.8.1",
     "@nuxtjs/firebase": "^7.6.1",
     "@nuxtjs/pwa": "^3.3.3",
     "core-js": "^3.14.0",
