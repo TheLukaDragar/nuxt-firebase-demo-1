@@ -1,5 +1,6 @@
 {
   "projects": {
-    "karoobar": "karoo-bar"
+    "karoobar": "karoo-bar",
+    "default": "karoo-bar"
   }
 }

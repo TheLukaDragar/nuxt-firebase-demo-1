@@ -2,7 +2,7 @@
   "functions": {
     "source": "functions",
     "predeploy": [
-    "rm -rf functions/.nuxt && npm --prefix run build && mkdir -p functions/.nuxt/dist && cp -r .nuxt/dist/ functions/.nuxt/dist && cp nuxt.config.js functions/"
+      "rm -rf functions/.nuxt && npm --prefix run build && mkdir -p functions/.nuxt/dist && cp -r .nuxt/dist/ functions/.nuxt/dist && cp nuxt.config.js functions/"
     ]
   },
   "hosting": {
@@ -10,7 +10,11 @@
       "rm -rf public/* && mkdir -p public/nuxt && cp -r functions/.nuxt/dist/client/ public/nuxt && cp -a static/. public/"
     ],
     "public": "public",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
     "rewrites": [
       {
         "source": "**",
