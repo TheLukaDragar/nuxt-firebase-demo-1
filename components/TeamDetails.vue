@@ -1,44 +1,49 @@
 <template>
   <v-container>
-
     <div class="mb-5">
-
       <div class="display-1">{{ team.name }}</div>
-
-
     </div>
 
-    <div class=" md:w-2/3 mx-auto mt-10  items-center">
-
-      //IMPLEMENT TEAM UPDATE LISTENER HERE
-      //ADD TEAM MEMBERS TAB
-      
-       
+    <div class="md:w-2/3 mx-auto mt-10 items-center">
+      //IMPLEMENT TEAM UPDATE LISTENER HERE //ADD TEAM MEMBERS TAB
 
       <div class="text-h4">{{ team.name }}</div>
-     
+
       <div class="text-s">
         {{ team.created }}
       </div>
 
-      <v-chip-group class="uppercase font-semibold flex flex-wrap ">
-        <v-chip pill label text-color="white" v-for="tag of tags" :key="tag" color="info"
-                class="mx-2 first:ml-0 theme--light">
-          <v-icon left>
-            mdi-label
-          </v-icon>
+      <v-chip-group class="uppercase font-semibold flex flex-wrap">
+        <v-chip
+          pill
+          label
+          text-color="white"
+          v-for="tag of tags"
+          :key="tag"
+          color="info"
+          class="mx-2 first:ml-0 theme--light"
+        >
+          <v-icon left> mdi-label </v-icon>
           {{ tag }}
         </v-chip>
       </v-chip-group>
-
     </div>
-    <div class="flex border rounded shadow p-5  md:w-2/3 mx-auto mt-4 mb-4 items-center">
-      <div>
-
-        Enable messaging
-      </div>
-      <Btn :disabled="listenersStarted" @click="startListeners"
-       class="ma-1"
+    <div
+      class="
+        flex
+        border
+        rounded
+        shadow
+        p-5
+        md:w-2/3
+        mx-auto
+        mt-4
+        mb-4
+        items-center
+      "
+    >
+      <div>Enable messaging</div>
+      <Btn :disabled="listenersStarted" @click="startListeners" class="ma-1"
         >Start Listeners</Btn
       >
       <Btn
@@ -61,24 +66,22 @@
       </Btn>
     </div>
 
-    
+    <div
+      class="flex flex-col w-full "
+      v-for="(req, index) in rider_requests"
+      :key="req.id"
+    >
+      <rider-request-card :req="req" :index="index"  />
+    </div>
+    <!-- <v-col class=""  v-for="req of rider_requests" :key="req.id">
 
-    <v-row>
-      <v-col col=5 v-for="req of rider_requests" :key="req.id">
-
-        <rider-request-card :req="req"/>
-      </v-col>
-    </v-row>
-    
-
-
+      </v-col> -->
+    <!-- </v-row> -->
   </v-container>
 </template>
 
 <script>
 import RiderRequestCard from './RiderRequestCard.vue'
-
-
 
 export default {
   components: { RiderRequestCard },
@@ -86,25 +89,20 @@ export default {
   props: {
     team: {
       type: Object,
-      required: true
+      required: true,
     },
   },
   data() {
     return {
-
-      rider_requests:[],
-       listenersStarted: false,
+      rider_requests: [],
+      listenersStarted: false,
       permissionGranted: false,
       idToken: '',
       loading: false,
-      
     }
-
   },
-  computed: {
-    
-  },
-  methods:{
+  computed: {},
+  methods: {
     async requestPermission() {
       try {
         const permission = await Notification.requestPermission()
@@ -130,7 +128,7 @@ export default {
       } else {
         // Show permission request.
         console.info(
-            'No Instance ID token available. Request permission to generate one.'
+          'No Instance ID token available. Request permission to generate one.'
         )
         // Show permission UI.
         // updateUIForPushPermissionRequired();
@@ -150,7 +148,7 @@ export default {
         var shinyData = payload || {}
         console.info('Message received. 2', shinyData.notification.body)
         this.$toast.info(shinyData.notification.body, {
-          position: "top-right",
+          position: 'top-right',
           timeout: 5000,
           closeOnClick: true,
           pauseOnFocusLoss: true,
@@ -159,10 +157,10 @@ export default {
           draggablePercent: 0.6,
           showCloseButtonOnHover: false,
           hideProgressBar: true,
-          closeButton: "button",
+          closeButton: 'button',
           icon: true,
-          rtl: false
-        });
+          rtl: false,
+        })
       })
     },
     startTokenRefreshListener() {
@@ -188,71 +186,75 @@ export default {
         alert(e)
       }
     },
-    
 
     async writeToFirestore(FCM_TOKEN) {
       const messageRef = this.$fire.firestore
-          .collection('users')
-          .doc(this.$fire.auth.currentUser.uid)
+        .collection('users')
+        .doc(this.$fire.auth.currentUser.uid)
       try {
-        await messageRef.set({
-          FCM_token: FCM_TOKEN,
-        },{merge:true})
+        await messageRef.set(
+          {
+            FCM_token: FCM_TOKEN,
+          },
+          { merge: true }
+        )
       } catch (e) {
         alert(e)
         return
       }
-      this.$toast.info("Obvestila boste prejemali na to napravo FCM_token: "+FCM_TOKEN, {
-        position: "top-right",
-        timeout: 10000,
-        closeOnClick: true,
-        pauseOnFocusLoss: true,
-        pauseOnHover: true,
-        draggable: true,
-        draggablePercent: 0.6,
-        showCloseButtonOnHover: false,
-        hideProgressBar: true,
-        closeButton: "button",
-        icon: true,
-        rtl: false
-      });
+      this.$toast.info(
+        'Obvestila boste prejemali na to napravo FCM_token: ' + FCM_TOKEN,
+        {
+          position: 'top-right',
+          timeout: 10000,
+          closeOnClick: true,
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          draggable: true,
+          draggablePercent: 0.6,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: 'button',
+          icon: true,
+          rtl: false,
+        }
+      )
     },
   },
   async mounted() {
     const db = this.$fire.firestore
 
-     try {
-        
-      const documentSnapshot = db.collection('teams').doc(this.team.id).collection("bar").onSnapshot(res => {
-        const changes=res.docChanges()
+    try {
+      // razvrsti po času... deluje! TEST!
+      const documentSnapshot = db
+        .collection('teams')
+        .doc(this.team.id)
+        .collection('bar')
+        .orderBy('timestamp', 'desc')
+        .onSnapshot((res) => {
+          const changes = res.docChanges()
 
-        changes.forEach(change => {
-          if(change.type==='added') {
+          changes.forEach((change) => {
+            if (change.type === 'added') {
+              this.rider_requests.push({
+                ...change.doc.data(),
+                id: change.doc.id,
+              })
+            }
+          })
 
-            this.rider_requests.push({
-              ...change.doc.data(),
-              id:change.doc.id
-            })
-
-          }
-
+          console.log(this.rider_requests)
         })
-
-        console.log(this.rider_requests)
-      }
-      )
-        
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e)
       this.$nuxt.error({ statusCode: 404, message: 'erorr' })
     }
-
   },
-  
 }
 </script>
 <style scoped>
-
-
+  .active {
+    background-color: yellow;
+  }
 </style>

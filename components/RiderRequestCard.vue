@@ -1,91 +1,52 @@
 <template>
-  <div class="flex">
-      <v-card height="320" width="500" color=#1a1a1a dark>
-        <v-toolbar
-            flat
-            height="50"
-            color="transparent"
+  <div
+    class="
+      my-3
+      w-full
 
-        >
+      text-white
+      p-4
+      rounded
+      shadow-xl
+      text-xl
+      flex flex-row
+      items-center
+      flex-wrap
+    "
+    :class="(index === 0 ? 'bg-yellow-400' : 'bg-black')"
 
-          <v-toolbar-title>
+  >
+    <div class="flex items-center mx-5">
 
-            {{req.rider_name}}
+       Rider {{ req.rider_name }} needs {{ req.request }}!!!
 
-           
-          </v-toolbar-title>
-          <v-spacer></v-spacer>
+    </div>
 
-          <v-chip
-
-              color="primary"
-              text-color="white"
-          >
-            <v-avatar
-                left
-                class="secondary"
-            >
-            
-              
-            </v-avatar>
-            
-           
-          </v-chip>
-
-        </v-toolbar>
-
-
-        <v-img gradient="to bottom, rgba(0,0,0,0.3), rgba(0,0,0,.1)"
-               :alt="req.rider_name" height=220 dark>
-
-          <v-card-title>
-            {{ req.request }}
-
-
-          </v-card-title>
-
-          <v-card-subtitle>{{ req.timestamp | toDate}}</v-card-subtitle>
-
-         
-        
-
-
-        </v-img>
-
-       
-
-      </v-card>
-    
-
+    <div class="mx-5">Created on: {{ req.timestamp | toDate }}</div>
   </div>
 </template>
 
 <script>
-
-
 export default {
   name: 'req',
   props: {
     req: {
       type: Object,
+      required: true,
+    },
+    index:{
+      type: Number,
       required: true
     }
   },
   data() {
     return {}
-
   },
   computed: {
     color() {
-     
-        return 'secondary'
-
-      
-      }
-    
-
-    
-  }
+      return 'secondary'
+    },
+  },
 }
 </script>
 
@@ -96,9 +57,7 @@ export default {
   position: absolute;
   width: 100%;
 }
-.notrounded-corner{
-    border-radius:0px  !important;
+.notrounded-corner {
+  border-radius: 0px !important;
 }
-
-
 </style>
