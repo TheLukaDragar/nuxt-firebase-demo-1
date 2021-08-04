@@ -13,7 +13,7 @@
       items-center
       flex-wrap
     "
-    :class="(index === 0 ? 'bg-yellow-400' : 'bg-black')"
+    :class="(req.seen == false ? 'bg-yellow-400' : 'bg-black')"
 
   >
     <div class="flex items-center mx-5">

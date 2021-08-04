@@ -48,13 +48,7 @@
                 class="p-2 text-subtitle-1"
               />
             </v-row>
-            <v-row>
-              <v-text-field
-                label="Team Description"
-                hint="example of helper text only on focus"
-              ></v-text-field>
-            </v-row>
-
+            
             <v-row class="flex-column">
               <label for="password"
                 ><span class="font-weight-bold text-h6">Password</span></label
@@ -160,7 +154,6 @@
 </template>
 
 <script>
-import Teams from '../components/Teams'
 import { mapGetters } from 'vuex'
 import { cloneDeep } from 'lodash'
 import firebase from 'firebase/app'
@@ -223,14 +216,6 @@ export default {
         return
       }
 
-      const exists = await this.checkExists(this.team.id)
-      if (exists) {
-        // eslint-disable-next-line no-alert
-        alert('Team already exists. Please enter a unique team ID.')
-        this.$refs.id.focus()
-        return
-      }
-
       if (!this.team.password) {
         // eslint-disable-next-line no-alert
         alert('Please enter team password.')
@@ -261,19 +246,11 @@ export default {
         .replace(/^-+/, '') // Trim - from start of text
         .replace(/-+$/, '') // Trim - from end of text
     },
-    async checkExists() {
-      const db = this.$fire.firestore
-      const documentSnapshot = await db
-        .collection('teams')
-        .doc(this.team.id)
-        .get()
-      return documentSnapshot.exists
-    },
+    
 
     async writeToDB() {
       //this.status = 'Saving...'
       const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
-      const db = firebase.firestore()
       const team = cloneDeep(this.team)
       const id = team.id
       delete team.id
@@ -283,21 +260,23 @@ export default {
       team.created = serverTimestamp
       team.owner = this.UserInfo.uid
 
-      try {
-        const promises = []
-        const promise1 = db.collection('teams').doc(id).set(team)
+       const messageRef = this.$fire.firestore
+        .collection('teams')
+        .doc(id)
 
-        promises.push(promise1)
-        await Promise.all(promises)
-        this.dialog = false
-      } catch (error) {
-        // eslint-disable-next-line no-alert
-        alert('Error saving team')
-        // eslint-disable-next-line no-console
-        console.error(error)
+      try {
+        await messageRef.set(team)
+      } catch (e) {
+
+        alert('Team already exists. Please enter a unique team ID.')
+        this.$refs.id.focus()
+        console.error(e)
+        return
       }
+
       team.id = id
       this.$emit('input', cloneDeep(team))
+      this.dialog = false;
     },
   },
 }

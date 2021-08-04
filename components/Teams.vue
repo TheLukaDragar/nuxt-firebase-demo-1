@@ -25,7 +25,6 @@ export default {
     data() {
     return {
       teasers: [],
-      eof: false,
       isLoading: false,
       lastDoc: null,
       batchSize: 8,
@@ -51,7 +50,7 @@ export default {
 
     
     async loadVideos() {
-      if (this.isLoading || this.eof) {
+      if (this.isLoading ) {
         return
       }
       this.isLoading = true

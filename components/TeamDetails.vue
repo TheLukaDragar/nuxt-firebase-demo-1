@@ -230,15 +230,16 @@ export default {
         .collection('teams')
         .doc(this.team.id)
         .collection('bar')
-        .orderBy('timestamp', 'desc')
+        .orderBy('timestamp', 'asc')
         .onSnapshot((res) => {
           const changes = res.docChanges()
 
           changes.forEach((change) => {
             if (change.type === 'added') {
-              this.rider_requests.push({
+              this.rider_requests.unshift({
                 ...change.doc.data(),
                 id: change.doc.id,
+                seen:false
               })
             }
           })
